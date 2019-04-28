@@ -6,6 +6,8 @@
 
 -include ../makefile.inc
 
+PYTHON=python3
+
 ifneq ($(strip $(NVCC)),)
 	SWIGFLAGS = -DGPU_WRAPPER
 endif
@@ -17,7 +19,7 @@ swigfaiss.cpp: swigfaiss.swig ../libfaiss.a
 	$(SWIG) -python -c++ -Doverride= -I../ $(SWIGFLAGS) -o $@ $<
 
 swigfaiss.o: swigfaiss.cpp
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CPUFLAGS) $(PYTHONCFLAGS) \
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CPUFLAGS) $(PYTHONCFLAGS) -I/usr/include/python3.6m -I/usr/include/python3.6m -I/usr/local/lib/python3.6/dist-packages/numpy/core/include/ \
                -I../ -c $< -o $@
 
 # Extension is .so even on OSX.
